@@ -1,8 +1,6 @@
 function startGame(player) {
 	dim1 = document.getElementById("dim1").value;
 	dim2 = document.getElementById("dim2").value;
-	alert(dim1);
-	alert(dim2);
 
 	row = document.getElementsByClassName('row')[0];
 	bigdiv = document.createElement("div");
@@ -26,6 +24,6 @@ function startGame(player) {
 
 		}
 		bigdiv.appendChild(div);
-		row.removeChild(document.getElementById("init"));
 	}
+	row.removeChild(document.getElementById("init"));
 }
