@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tic-tac-toe</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="3.js"></script>
+	<style>
+	.container {
+		padding-top: 2%;
+	}
+	input[type=number]{
+        width: 4%;
+    } 
+    </style>
+
+	
+</head>
+<body>
+	
+	<div class="container">
+		
+		<div class="row">
+			<div id="init">
+				<p>Choose field size:</p>
+		        <input type="number" id="dim1" placeholder="5" min="5" max="1000" value="5">
+		        X
+		        <input type="number" id="dim2" placeholder="5" min="5" max="1000" value="5">
+		        <div id="firstMove">
+				    <span>First move</span>
+				    <button class="btn btn-default" onclick="startGame('X')" id="X">X</button>
+			        <button class="btn btn-default" onclick="startGame(0)" id="0">0</button>
+			    </div>	
+			</div>
+		   <button class="btn btn-default btn-lg" style="margin-top: 2%" onclick="location.reload()">New Game</button>
+	    </div>
+    </div>
+</body>
+</html>
