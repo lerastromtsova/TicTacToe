@@ -18,7 +18,10 @@ function startGame(player) {
 			br = document.createElement("br");
 			btn.setAttribute("class","btn btn-default");
 			btn.setAttribute("id","cell"+i+j);
+			
 			btn.innerHTML = player;
+			btn.setAttribute("onclick","Move(i,j,btn.innerHTML)");
+
 			div.appendChild(btn);
 			div.appendChild(br);
 
@@ -27,4 +30,12 @@ function startGame(player) {
 		bigdiv.appendChild(div);
 	}
 	row.removeChild(document.getElementById("init"));
+}
+
+function Move(row,col,plr) {
+	btn = document.getElementById("cell"+row+col);
+	div = document.getElementById(row)[0];
+	h1 = document.createElement("h1");
+    h1.innerHTML = plr;
+    div.replaceChild(btn,h1);
 }
