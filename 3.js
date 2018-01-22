@@ -1,7 +1,10 @@
-function createField(player) {
+var player;
+
+function createField() {
     dim1 = document.getElementById("dim1").value;
 	dim2 = document.getElementById("dim2").value;
 	field = []
+
 
 	for (i=0;i<dim1;i++) {
 		field[i] = []
@@ -9,9 +12,8 @@ function createField(player) {
             field[i][j] = null;
 		}
 	}
-	if (field) {
-		drawField(field);
-	}
+	document.body.removeChild(document.getElementById('init'));
+	return field;
 }
 
 function drawField(field) {
@@ -25,8 +27,11 @@ function drawField(field) {
 		for (j=0;j<field[0].length;j++) {
 			td = document.createElement('td');
 			td.setAttribute('id','cell'+i+j);
-			td.setAttribute('onclick','Move(i,j)');
-			td.innerHTML = '-';
+			td.setAttribute('onclick','Move(field,'+i+','+j+')');
+			if (field[i][j]) {
+				td.innerHTML = field[i][j];
+			}
+			else td.innerHTML = '-';
             tr.appendChild(td);
 		}
 		table.appendChild(tr);
@@ -34,74 +39,43 @@ function drawField(field) {
     body.appendChild(table);
 }
 
-function startGame(player) {
-	
-
-	row = document.getElementsByClassName('row')[0];
-	bigdiv = document.createElement("div");
-	bigdiv.setAttribute("class","col-md-12");
-	bigdiv.setAttribute("style","margin-top:1%")
-	table = document.createElement('table');
-	bigdiv.appendChild(table);
-	row.appendChild(bigdiv);
-
-	
-	for (i=0;i<dim1;i++) {
-        
-        
-		for (j=0;j<dim2;j++) {
-			btn = document.createElement("button");
-			br = document.createElement("br");
-			btn.setAttribute("class","btn btn-default");
-			btn.setAttribute("id","cell"+i+j);
-			
-			btn.innerHTML = player;
-			btn.setAttribute("onclick","Move(i,j,btn.innerHTML)");
-
-			div.appendChild(btn);
-			div.appendChild(br);
-
-
-		}
-		
-	}
-	row.removeChild(document.getElementById("init"));
+function drawMove(field,i,j) {
+	cell = document.getElementById("cell"+i+j);
+	cell.innerHTML = field[i][j];
+    
 }
 
-function Move(i,j,plr) {
-	group = document.getElementById("g"+i);
-	b = document.getElementById("cell"+i+j);
-		h1 = document.createElement("h3");
-	    h1.innerHTML = plr;
-	    parent = b.parentNode;
-	    parent.replaceChild(h1,b);
-		for (var k=0;k<dim1;k++) {                             // Замена оставшихся кнопок на противоположные по символу
-	        for (var z=0;z<dim2;z++) {  
-	            try {                       // Не уверен, что стоит оставлять это внутри функции move
-	                btn = document.getElementById("cell"+k+z); // Как, впрочем, и не уверен, что это вообще работает
-	                if (btn.innerHTML == "X"){
-	                    btn.innerHTML = "0";
-	                } else {
-	                    btn.innerHTML = "X";
-	                }
-	            }
-	            catch(e) {}
-	        }
+
+function Move(field,i,j) {
+	if (field[i][j] == null) {
+		field[i][j] = player;
+
+		drawMove(field,i,j);
+
+	    if (checkVictory(field)) {
+	    	alert(player+" wins!");
 	    }
+	    
+	    if (player=='0') {
+	    	player = 'X';
+	    }
+	    else player = '0';
+	}
 }
 
-function checkRows (symb) { // Проверка выигрыша по рядам (аргументом передаём символ последнего ходившего игрока)
+
+function checkRows () { // Проверка выигрыша по рядам (аргументом передаём символ последнего ходившего игрока)
     victory = true;
     for (i=0; i<dim1; i++) {
         for (j=0; j<dim2; j++) {
             for (k=0; k<5; k++) {
                 try {
-                    h1 = document.getElementById("cell"+i+(j+k));
-                    victory = victory && (h1.innerHTML == symb);
+                    cell = field[i][j+k];
+                    victory = victory && (cell == player);
                 }   catch(e) {}
             }
             if (victory) {
-                return true;
+                return player;
             }   else {
                 return false;
             }
@@ -109,18 +83,18 @@ function checkRows (symb) { // Проверка выигрыша по рядам
     }
 }
 
-function checkColumns (symb) { // Проверка выигрыша по столбцам
+function checkColumns () { // Проверка выигрыша по столбцам
     victory = true;
     for (j=0; j<dim2; j++) {
         for (i=0; i<dim1; i++) {
             for (k=0; k<5; k++) {
                 try {
-                    h1 = document.getElementById("cell"+(i+k)+j);
-                    victory = victory && (h1.innerHTML == symb);
+                    cell = field[i+k][j];
+                    victory = victory && (cell == player);
                 }   catch(e) {}
             }
             if (victory) {
-                return true;
+                return player;
             }   else {
                 return false;
             }
@@ -128,18 +102,19 @@ function checkColumns (symb) { // Проверка выигрыша по сто�
     }
 }
 
-function checkLDiagonal (symb) { // Проверка выигрыша по диагонали (сверху слева -> вниз направо)
+function checkLDiagonal () { // Проверка выигрыша по диагонали (сверху слева -> вниз направо)
     victory = true;
     for (i=0; i<dim1; i++) {
         for (j=0; j<dim2; j++) {
             for (k=0; k<5; k++) {
                 try {
-                    h1 = document.getElementById("cell"+(i+k)+(j+k));
-                    victory = victory && (h1.innerHTML == symb);
+                    cell = field[i+k][j+k];
+
+                    victory = victory && (cell == player);
                 }   catch(e) {}
             }
             if (victory) {
-                return true;
+                return player;
             }   else {
                 return false;
             }
@@ -147,21 +122,38 @@ function checkLDiagonal (symb) { // Проверка выигрыша по ди�
     }
 }
 
-function checkRDiagonal (symb) { // Проверка выигрыша по диагонали (сверху справа -> вниз налево)
+function checkRDiagonal () { // Проверка выигрыша по диагонали (сверху справа -> вниз налево)
     victory = true;
     for (i=0; i<dim1; i++) {
         for (j=dim2; j>0; j--) {
             for (k=0; k<5; k++) {
                 try {
-                    h1 = document.getElementById("cell"+(i+k)+(j-k));
-                    victory = victory && (h1.innerHTML == symb);
+                    cell = field[i+k][j-k];
+                    console.log(cell)
+                    victory = victory && (cell == player);
                 }   catch(e) {}
             }
             if (victory) {
-                return true;
+                return player;
             }   else {
                 return false;
             }
         }
     }
+}
+
+function checkVictory(field) {
+	win = (checkRows(player)) || (checkColumns(player)) || (checkRDiagonal(player)) || (checkLDiagonal(player))
+	if (win) {
+		return win;
+	}
+	else {
+		return false;
+	}
+}
+
+function Game(player_id) {
+	player = player_id;
+    field = createField();
+    drawField(field);
 }
