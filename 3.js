@@ -1,18 +1,54 @@
-function startGame(player) {
-	dim1 = document.getElementById("dim1").value;
+function createField(player) {
+    dim1 = document.getElementById("dim1").value;
 	dim2 = document.getElementById("dim2").value;
+	field = []
+
+	for (i=0;i<dim1;i++) {
+		field[i] = []
+		for (j=0;j<dim2;j++) {
+            field[i][j] = null;
+		}
+	}
+	if (field) {
+		drawField(field);
+	}
+}
+
+function drawField(field) {
+	body = document.getElementsByTagName('body')[0];
+	table = document.createElement("table");
+
+	for (i=0;i<field.length;i++) {
+		tr = document.createElement('tr');
+		tr.setAttribute('id','tr'+i);
+
+		for (j=0;j<field[0].length;j++) {
+			td = document.createElement('td');
+			td.setAttribute('id','cell'+i+j);
+			td.setAttribute('onclick','Move(i,j)');
+			td.innerHTML = '-';
+            tr.appendChild(td);
+		}
+		table.appendChild(tr);
+	}
+    body.appendChild(table);
+}
+
+function startGame(player) {
+	
 
 	row = document.getElementsByClassName('row')[0];
 	bigdiv = document.createElement("div");
 	bigdiv.setAttribute("class","col-md-12");
 	bigdiv.setAttribute("style","margin-top:1%")
+	table = document.createElement('table');
+	bigdiv.appendChild(table);
 	row.appendChild(bigdiv);
 
+	
 	for (i=0;i<dim1;i++) {
-		div = document.createElement('div');
-        div.setAttribute("class","btn-group btn-group-lg");
-        div.setAttribute("role","group");
-        div.setAttribute("id",i);
+        
+        
 		for (j=0;j<dim2;j++) {
 			btn = document.createElement("button");
 			br = document.createElement("br");
@@ -27,27 +63,31 @@ function startGame(player) {
 
 
 		}
-		bigdiv.appendChild(div);
+		
 	}
 	row.removeChild(document.getElementById("init"));
 }
 
-function Move(row,col,plr) {
-	btn = document.getElementById("cell"+row+col);
-	div = document.getElementById(row)[0];
-	h1 = document.createElement("h1");
-    h1.innerHTML = plr;
-    div.replaceChild(btn,h1);
-	for (i=0;i<dim1;i++) {                             // Замена оставшихся кнопок на противоположные по символу
-        for (j=0;j<dim2;j++) {                         // Не уверен, что стоит оставлять это внутри функции move
-            btn = document.getElementById("cell"+i+j); // Как, впрочем, и не уверен, что это вообще работает
-            if (btn.innerHTML == "X"){
-                btn.innerHTML = "0";
-            } else {
-                btn.innerHTML = "X";
-            }
-        }
-    }
+function Move(i,j,plr) {
+	group = document.getElementById("g"+i);
+	b = document.getElementById("cell"+i+j);
+		h1 = document.createElement("h3");
+	    h1.innerHTML = plr;
+	    parent = b.parentNode;
+	    parent.replaceChild(h1,b);
+		for (var k=0;k<dim1;k++) {                             // Замена оставшихся кнопок на противоположные по символу
+	        for (var z=0;z<dim2;z++) {  
+	            try {                       // Не уверен, что стоит оставлять это внутри функции move
+	                btn = document.getElementById("cell"+k+z); // Как, впрочем, и не уверен, что это вообще работает
+	                if (btn.innerHTML == "X"){
+	                    btn.innerHTML = "0";
+	                } else {
+	                    btn.innerHTML = "X";
+	                }
+	            }
+	            catch(e) {}
+	        }
+	    }
 }
 
 function checkRows (symb) { // Проверка выигрыша по рядам (аргументом передаём символ последнего ходившего игрока)
@@ -61,9 +101,9 @@ function checkRows (symb) { // Проверка выигрыша по рядам
                 }   catch(e) {}
             }
             if (rows) {
-                return true:
+                return true;
             }   else {
-                return false:
+                return false;
             }
         }
     }
@@ -80,9 +120,9 @@ function checkColumns (symb) { // Проверка выигрыша по сто�
                 }   catch(e) {}
             }
             if (rows) {
-                return true:
+                return true;
             }   else {
-                return false:
+                return false;
             }
         }
     }
@@ -99,9 +139,9 @@ function checkLDiagonal (symb) { // Проверка выигрыша по ди�
                 }   catch(e) {}
             }
             if (rows) {
-                return true:
+                return true;
             }   else {
-                return false:
+                return false;
             }
         }
     }
@@ -118,9 +158,9 @@ function checkRDiagonal (symb) { // Проверка выигрыша по ди�
                 }   catch(e) {}
             }
             if (rows) {
-                return true:
+                return true;
             }   else {
-                return false:
+                return false;
             }
         }
     }
