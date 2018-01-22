@@ -38,4 +38,90 @@ function Move(row,col,plr) {
 	h1 = document.createElement("h1");
     h1.innerHTML = plr;
     div.replaceChild(btn,h1);
+	for (i=0;i<dim1;i++) {                             // Замена оставшихся кнопок на противоположные по символу
+        for (j=0;j<dim2;j++) {                         // Не уверен, что стоит оставлять это внутри функции move
+            btn = document.getElementById("cell"+i+j); // Как, впрочем, и не уверен, что это вообще работает
+            if (btn.innerHTML == "X"){
+                btn.innerHTML = "0";
+            } else {
+                btn.innerHTML = "X";
+            }
+        }
+    }
+}
+
+function checkRows (symb) { // Проверка выигрыша по рядам (аргументом передаём символ последнего ходившего игрока)
+    victory = true;
+    for (i=0; i<dim1; i++) {
+        for (j=0; j<dim2; j++) {
+            for (k=0; k<5; k++) {
+                try {
+                    h1 = document.getElementById("cell"+i+(j+k));
+                    victory = victory && (h1.innerHTML == symb);
+                }   catch(e) {}
+            }
+            if (rows) {
+                return true:
+            }   else {
+                return false:
+            }
+        }
+    }
+}
+
+function checkColumns (symb) { // Проверка выигрыша по столбцам
+    victory = true;
+    for (j=0; j<dim2; j++) {
+        for (i=0; i<dim1; i++) {
+            for (k=0; k<5; k++) {
+                try {
+                    h1 = document.getElementById("cell"+(i+k)+j);
+                    victory = victory && (h1.innerHTML == symb);
+                }   catch(e) {}
+            }
+            if (rows) {
+                return true:
+            }   else {
+                return false:
+            }
+        }
+    }
+}
+
+function checkLDiagonal (symb) { // Проверка выигрыша по диагонали (сверху слева -> вниз направо)
+    victory = true;
+    for (i=0; i<dim1; i++) {
+        for (j=0; j<dim2; j++) {
+            for (k=0; k<5; k++) {
+                try {
+                    h1 = document.getElementById("cell"+(i+k)+(j+k));
+                    victory = victory && (h1.innerHTML == symb);
+                }   catch(e) {}
+            }
+            if (rows) {
+                return true:
+            }   else {
+                return false:
+            }
+        }
+    }
+}
+
+function checkRDiagonal (symb) { // Проверка выигрыша по диагонали (сверху справа -> вниз налево)
+    victory = true;
+    for (i=0; i<dim1; i++) {
+        for (j=dim2; j>0; j--) {
+            for (k=0; k<5; k++) {
+                try {
+                    h1 = document.getElementById("cell"+(i+k)+(j-k));
+                    victory = victory && (h1.innerHTML == symb);
+                }   catch(e) {}
+            }
+            if (rows) {
+                return true:
+            }   else {
+                return false:
+            }
+        }
+    }
 }
