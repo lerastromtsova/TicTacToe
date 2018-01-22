@@ -5,6 +5,7 @@ function startGame(player) {
 	row = document.getElementsByClassName('row')[0];
 	bigdiv = document.createElement("div");
 	bigdiv.setAttribute("class","col-md-12");
+	bigdiv.setAttribute("style","margin-top:1%")
 	row.appendChild(bigdiv);
 
 	for (i=0;i<dim1;i++) {

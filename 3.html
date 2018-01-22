@@ -22,18 +22,18 @@
 	<div class="container">
 		
 		<div class="row">
-			<div id="init">
+			<div id="init" style="margin-left: 1%">
 				<p>Choose field size:</p>
-		        <input type="number" id="dim1" placeholder="5" min="5" max="1000" value="5">
+		        <input type="number" id="dim1" placeholder="5" min="5" max="24" value="5">
 		        X
-		        <input type="number" id="dim2" placeholder="5" min="5" max="1000" value="5">
-		        <div id="firstMove">
+		        <input type="number" id="dim2" placeholder="5" min="5" max="24" value="5">
+		        <div id="firstMove" style="margin-top: 1%">
 				    <span>First move</span>
 				    <button class="btn btn-default" onclick="startGame('X')" id="X">X</button>
 			        <button class="btn btn-default" onclick="startGame(0)" id="0">0</button>
 			    </div>	
 			</div>
-		   <button class="btn btn-default btn-lg" style="margin-top: 2%; margin-left: 1%" onclick="location.reload()">New Game</button>
+		   <button class="btn btn-default" style="margin-top: 2%; margin-left: 1%" onclick="location.reload()">Reset</button>
 	    </div>
     </div>
 </body>
