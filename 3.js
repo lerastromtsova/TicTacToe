@@ -100,7 +100,7 @@ function checkRows (symb) { // Проверка выигрыша по рядам
                     victory = victory && (h1.innerHTML == symb);
                 }   catch(e) {}
             }
-            if (rows) {
+            if (victory) {
                 return true;
             }   else {
                 return false;
@@ -119,7 +119,7 @@ function checkColumns (symb) { // Проверка выигрыша по сто�
                     victory = victory && (h1.innerHTML == symb);
                 }   catch(e) {}
             }
-            if (rows) {
+            if (victory) {
                 return true;
             }   else {
                 return false;
@@ -138,7 +138,7 @@ function checkLDiagonal (symb) { // Проверка выигрыша по ди�
                     victory = victory && (h1.innerHTML == symb);
                 }   catch(e) {}
             }
-            if (rows) {
+            if (victory) {
                 return true;
             }   else {
                 return false;
@@ -157,7 +157,7 @@ function checkRDiagonal (symb) { // Проверка выигрыша по ди�
                     victory = victory && (h1.innerHTML == symb);
                 }   catch(e) {}
             }
-            if (rows) {
+            if (victory) {
                 return true;
             }   else {
                 return false;
