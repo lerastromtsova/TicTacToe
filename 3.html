@@ -12,17 +12,29 @@
 	input[type=number]{
         width: 4%;
     } 
-    TABLE {
-    width: 300px; /* Ширина таблицы */
-    border-collapse: collapse; /* Убираем двойные линии между ячейками */
-   }
-   TD, TH {
-    padding: 3px; /* Поля вокруг содержимого таблицы */
-    border: 1px solid black; /* Параметры рамки */
-   }
-   TH {
-    background: #b0e0e6; /* Цвет фона */
-   }
+
+    table {
+   	  width: 90%;
+      border-collapse: collapse;
+	}
+	td {
+	  position: relative;
+	  border: 1px solid black;
+	}
+	td:after {
+	  content: '';
+	  display: block;
+	  margin-top: 100%;
+	}
+	td .content {
+	  position: absolute;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  align: center;
+	}
+  
     </style>
 
 	
@@ -35,8 +47,8 @@
 		        <input type="number" id="dim2" placeholder="5" min="5" max="24" value="5">
 		        <div id="firstMove" style="margin-top: 1%">
 				    <span>First move</span>
-				    <button onclick="createField('X')" id="X">X</button>
-			        <button onclick="createField(0)" id="0">0</button>
+				    <button onclick="Game('X')" id="X">X</button>
+			        <button onclick="Game('0')" id="0">0</button>
 			    </div>	
 			</div>
 		   <button style="margin-top: 2%; margin-left: 1%" onclick="location.reload()">Reset</button>
